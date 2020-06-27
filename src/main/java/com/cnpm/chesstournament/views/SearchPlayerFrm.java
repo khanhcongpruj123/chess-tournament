@@ -4,6 +4,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.cnpm.chesstournament.controllers.dao.PlayerDAO;
@@ -12,6 +15,8 @@ import com.cnpm.chesstournament.models.Player;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class SearchPlayerFrm extends JFrame implements ActionListener {
 
@@ -23,6 +28,7 @@ public class SearchPlayerFrm extends JFrame implements ActionListener {
     private DefaultTableModel dataModel;
     private JTable playerTable;
     private String[] colums = {"id", "Ten", "Nam Sinh", "Quoc Tich"};
+    private List<Player> listPlayer;
 
     public SearchPlayerFrm() {
         this.setSize(WIDTH, HEIGHT);
@@ -47,8 +53,22 @@ public class SearchPlayerFrm extends JFrame implements ActionListener {
         dataModel.setColumnIdentifiers(colums);
 
         playerTable = new JTable();
-        playerTable.setBounds((WIDTH - 300) / 2, 60, 300, 300);
+        playerTable.setBounds(10, 60, 400, 300);
         playerTable.setModel(dataModel);
+        playerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        playerTable.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				int column = playerTable.getColumnModel().getColumnIndexAtX(e.getX()); // get the coloum of the button
+				int row = e.getY() / playerTable.getRowHeight(); // get the row of the button
+
+				// *Checking the row or column is valid or not
+				if (row < playerTable.getRowCount() && row >= 0 && column < playerTable.getColumnCount() && column >= 0) {
+					new EditPlayerFrm(listPlayer.get(row));
+				}
+			}
+		});
+
 
         this.add(playerTable);
         this.add(edtPlayerName);
@@ -71,6 +91,7 @@ public class SearchPlayerFrm extends JFrame implements ActionListener {
 
                     PlayerDAO playerDAO = new PlayerDAO();
                     List<Player> res = playerDAO.getPlayerByKey(key);
+                    listPlayer = res;
 
                     String[][] data = new String[res.size()][4];
 

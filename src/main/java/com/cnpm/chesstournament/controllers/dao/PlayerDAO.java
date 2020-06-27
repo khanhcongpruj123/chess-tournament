@@ -52,4 +52,23 @@ public class PlayerDAO extends DAO {
         }
         return res;
     }
+
+    public boolean updatePlayer(Player player) {
+
+        try {
+            String sql = "UPDATE tbl_Player SET name = ?, birth_year = ?, nationality = ? WHERE id = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, player.getName());
+            statement.setLong(2, player.getBirthYear());
+            statement.setString(3, player.getNationality());
+            statement.setLong(4, player.getId());
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
 }

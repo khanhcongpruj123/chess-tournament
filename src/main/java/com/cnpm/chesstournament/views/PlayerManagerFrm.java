@@ -16,12 +16,9 @@ public class PlayerManagerFrm extends JFrame implements ActionListener {
 
     private final int WIDTH = 500;
     private final int HEIGHT = 500;
-    private JTable playerTable;
     private JButton btnUpdate;
     private JButton btnAdd;
     private JButton btnDelete;
-    private DefaultTableModel dataModel;
-    private String[] colums = {"id", "Ten", "Nam Sinh", "Quoc Tich"};
 
     public PlayerManagerFrm() {
 
@@ -34,19 +31,10 @@ public class PlayerManagerFrm extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
 
-        // loadData();
     }
 
     void initWidgets() {
 
-        // dataModel = new DefaultTableModel();
-        // dataModel.setColumnIdentifiers(colums);
-
-        // playerTable = new JTable();
-        // playerTable.setBounds((WIDTH - 300) / 2, 10, 300, 300);
-        // playerTable.setModel(dataModel);
-
-        // this.add(playerTable);
 
         btnUpdate = new JButton("Cập nhật");
         btnDelete = new JButton("Xoá");
