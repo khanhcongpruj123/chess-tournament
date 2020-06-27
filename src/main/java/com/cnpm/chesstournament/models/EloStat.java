@@ -16,8 +16,8 @@ public class EloStat extends Player {
         this.newElo = newElo;
     }
 
-    public EloStat(long id, String name, long oldElo, long newElo) {
-        super(id, name);
+    public EloStat(long id, String name, long birthYear, String nationality,long oldElo, long newElo) {
+        super(id, name, birthYear, nationality);
         this.oldElo = oldElo;
         this.newElo = newElo;
     }

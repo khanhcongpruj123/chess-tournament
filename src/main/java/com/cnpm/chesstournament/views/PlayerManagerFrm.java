@@ -1,5 +1,6 @@
 package com.cnpm.chesstournament.views;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -16,12 +17,16 @@ public class PlayerManagerFrm extends JFrame implements ActionListener {
     private final int WIDTH = 500;
     private final int HEIGHT = 500;
     private JTable playerTable;
+    private JButton btnUpdate;
+    private JButton btnAdd;
+    private JButton btnDelete;
     private DefaultTableModel dataModel;
-    private String[] colums = {"id", "name"};
+    private String[] colums = {"id", "Ten", "Nam Sinh", "Quoc Tich"};
 
     public PlayerManagerFrm() {
 
         this.setSize(WIDTH, HEIGHT);
+        this.setLayout(null);
 
         initWidgets();
 
@@ -29,40 +34,35 @@ public class PlayerManagerFrm extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
 
-        loadData();
+        // loadData();
     }
 
     void initWidgets() {
 
-        dataModel = new DefaultTableModel();
-        dataModel.setColumnIdentifiers(colums);
+        // dataModel = new DefaultTableModel();
+        // dataModel.setColumnIdentifiers(colums);
 
-        playerTable = new JTable();
-        playerTable.setBounds((WIDTH - 300) / 2, 10, 300, 300);
-        playerTable.setModel(dataModel);
+        // playerTable = new JTable();
+        // playerTable.setBounds((WIDTH - 300) / 2, 10, 300, 300);
+        // playerTable.setModel(dataModel);
 
-        this.add(playerTable);
-    }
+        // this.add(playerTable);
 
-    void loadData() {
-        PlayerDAO playerDAO = new PlayerDAO();
-        List<Player> res = playerDAO.getAllPlayer();
-        String[][] data = new String[res.size()][3];
+        btnUpdate = new JButton("Cập nhật");
+        btnDelete = new JButton("Xoá");
+        btnAdd = new JButton("Thêm");
 
-        for (int i = 0; i < res.size(); i++) {
-            Player player = res.get(i);
-            data[i][0] = "" + player.getId();
-            data[i][1] = "" + player.getName();
-        }
+        btnUpdate.addActionListener(this);
+        btnUpdate.setBounds(10, 10, 200, 50);
 
-        dataModel.setDataVector(data, colums);
-        dataModel.notifyAll();
+        this.add(btnUpdate);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-
+        if ((e.getSource() instanceof JButton) && (e.getSource().equals(btnUpdate))) {
+            SearchPlayerFrm searchPlayerFrm = new SearchPlayerFrm();
+        }
     }
     
 }

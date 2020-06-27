@@ -20,6 +20,7 @@ public class HomeFrm extends JFrame implements ActionListener {
     public HomeFrm() {
 
         this.setSize(WIDTH, HEIGHT);
+        this.setLayout(null);
         this.setLocationRelativeTo(null);
 
         btnManagePlayer = new JButton("Quản lí kì thủ");

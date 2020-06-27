@@ -25,6 +25,7 @@ public class RankingFrm extends JFrame {
 
         this.setSize(WIDTH, HEIGHT);
         this.setLocationRelativeTo(null);
+        this.setLayout(null);
 
         initWidgets();
 

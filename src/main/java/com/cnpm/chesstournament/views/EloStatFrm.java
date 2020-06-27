@@ -24,6 +24,7 @@ public class EloStatFrm extends JFrame implements ActionListener {
     public EloStatFrm() {
 
         this.setSize(WIDTH, HEIGHT);
+        this.setLayout(null);
 
         initWidgets();
 
