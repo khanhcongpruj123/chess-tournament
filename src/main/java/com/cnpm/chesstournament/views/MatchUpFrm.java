@@ -71,6 +71,7 @@ public class MatchUpFrm extends JFrame implements ActionListener {
 
         this.add(rankingTable);
         this.add(roundBox);
+        this.add(btnMatchUp);
     }
 
     private void loadRound() {
@@ -98,12 +99,21 @@ public class MatchUpFrm extends JFrame implements ActionListener {
             if (index - 1 >= 0 && index - 1 < listRound.size()) {
                 loadRanking(listRound.get(index - 1).getRound());
             }
-        } else if (e.getSource() instanceof JComboBox && e.getSource().equals(roundBox)) {
-            Match m = new Match();
+        } else if (e.getSource() instanceof JButton && e.getSource().equals(btnMatchUp)) {
             List<Player> tmp = new ArrayList<>(list);
-            Player player1 = tmp.get(new Random().nextInt(tmp.size()));
-            tmp.
-            Player player2 = tmp.get(new Random().nextInt(tmp.size()));
+            List<Match> schedule = new ArrayList<>();
+            while(tmp.size() > 1) {
+                Match m = new Match();
+                Player player1 = tmp.get(new Random().nextInt(tmp.size()));
+                tmp.remove(player1);
+                Player player2 = tmp.get(new Random().nextInt(tmp.size()));
+                tmp.remove(player2);
+                m.setPlayer1(player1);
+                m.setPlayer2(player2);
+                schedule.add(m);
+            }
+
+            new ScheduleFrm(schedule);
         }
     }
 
