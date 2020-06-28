@@ -27,4 +27,23 @@ public class RoundDAO extends DAO {
         }
         return res; 
     }
+
+	public long getLastedId() {
+        String getLastedIdRoundSql = "SELECT MAX(tbl_Round.round) FROM tbl_Round";
+        long lastedRound = 0;
+        try {
+
+            // lay thu tu round cuoi cung de tao round moi, bang cach + 1
+            ResultSet set = conn.createStatement().executeQuery(getLastedIdRoundSql);
+            while(set.next()) {
+                lastedRound = set.getLong(1);
+                break;
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+		return lastedRound;
+	}
 }

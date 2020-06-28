@@ -68,9 +68,7 @@ public class RankingFrm extends JFrame {
             @Override
             public void run() {
                 RankingDAO rankingDAO = new RankingDAO();
-                list = rankingDAO.getRankingByRound(1);
-            
-
+                list = rankingDAO.getRandking();
                 String[][] data = new String[list.size()][7];
 
                 for (int i = 0; i < list.size(); i++) {

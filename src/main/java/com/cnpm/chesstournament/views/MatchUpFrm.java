@@ -28,7 +28,7 @@ public class MatchUpFrm extends JFrame implements ActionListener {
     private final int WIDTH = 500;
     private final int HEIGHT = 500;
 
-    private String[] rankColumns = { "Id", "Tên", "Năm sinh", "Quốc tịch" };
+    private String[] rankColumns = { "Id", "Tên", "Năm sinh", "Quốc tịch", "Tổng điểm", "Tổng điểm đối thủ đã gặp", "Elo tăng giảm" };
     private JComboBox roundBox;
     private JTable rankingTable;
     private DefaultTableModel dataModel;
@@ -49,6 +49,7 @@ public class MatchUpFrm extends JFrame implements ActionListener {
         this.setVisible(true);
 
         loadRound();
+        loadRanking(0);
     }
 
     void initWidgets() {
@@ -100,6 +101,7 @@ public class MatchUpFrm extends JFrame implements ActionListener {
                 loadRanking(listRound.get(index - 1).getRound());
             }
         } else if (e.getSource() instanceof JButton && e.getSource().equals(btnMatchUp)) {
+            if (list == null) return;
             List<Player> tmp = new ArrayList<>(list);
             List<Match> schedule = new ArrayList<>();
             while(tmp.size() > 1) {
@@ -123,8 +125,7 @@ public class MatchUpFrm extends JFrame implements ActionListener {
             @Override
             public void run() {
                 RankingDAO rankingDAO = new RankingDAO();
-                list = rankingDAO.getRankingByRound(1);
-            
+                list = rankingDAO.getRankingByRound(round);
 
                 String[][] data = new String[list.size()][7];
 

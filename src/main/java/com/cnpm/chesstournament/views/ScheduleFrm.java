@@ -22,7 +22,7 @@ public class ScheduleFrm extends JFrame implements ActionListener {
 
     private JTable matchTable;
     private DefaultTableModel dataModel;
-    private String[] columns = { "Ten nguoi choi 1", "Ten nguoi choi 2" };
+    private String[] columns = { "Cap dau", "Ten nguoi choi 1", "Ten nguoi choi 2" };
     private List<Round> listRound;
     private List<Match> schedule;
     private JButton btnSave;
@@ -44,12 +44,13 @@ public class ScheduleFrm extends JFrame implements ActionListener {
 
     private void initWidgets() {
 
-        final String[][] data = new String[schedule.size()][2];
+        final String[][] data = new String[schedule.size()][3];
 
         for (int i = 0; i < schedule.size(); i++) {
             final Match match = schedule.get(i);
-            data[i][0] = "" + match.getPlayer1().getName();
-            data[i][1] = "" + match.getPlayer2().getName();
+            data[i][0] = "" + (i + 1);
+            data[i][1] = "" + match.getPlayer1().getName();
+            data[i][2] = "" + match.getPlayer2().getName();
         }
 
         dataModel = new DefaultTableModel(data, columns);
