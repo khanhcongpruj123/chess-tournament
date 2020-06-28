@@ -19,8 +19,8 @@ public class RoundDAO extends DAO {
             while(resultSet.next()) {
                 long id = resultSet.getLong(1);
                 long round = resultSet.getLong(2);
-                Round player = new Round(id, round);
-                res.add(player);
+                Round r = new Round(id, round);
+                res.add(r);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -11,17 +11,19 @@ public class HappenedMatch implements Serializable {
     private long id;
     private Player player;
     private Match match;
-    private long result;
+    private long point;
+    private long elo;
 
 
     public HappenedMatch() {
     }
 
-    public HappenedMatch(long id, Player player, Match match, long result) {
+    public HappenedMatch(long id, Player player, Match match, long point, long elo) {
         this.id = id;
         this.player = player;
         this.match = match;
-        this.result = result;
+        this.point = point;
+        this.elo = elo;
     }
 
     public long getId() {
@@ -48,12 +50,20 @@ public class HappenedMatch implements Serializable {
         this.match = match;
     }
 
-    public long getResult() {
-        return this.result;
+    public long getPoint() {
+        return this.point;
     }
 
-    public void setResult(long result) {
-        this.result = result;
+    public void setPoint(long point) {
+        this.point = point;
+    }
+
+    public long getElo() {
+        return this.elo;
+    }
+
+    public void setElo(long elo) {
+        this.elo = elo;
     }
 
     public HappenedMatch id(long id) {
@@ -71,8 +81,13 @@ public class HappenedMatch implements Serializable {
         return this;
     }
 
-    public HappenedMatch result(long result) {
-        this.result = result;
+    public HappenedMatch point(long point) {
+        this.point = point;
+        return this;
+    }
+
+    public HappenedMatch elo(long elo) {
+        this.elo = elo;
         return this;
     }
 
@@ -84,12 +99,12 @@ public class HappenedMatch implements Serializable {
             return false;
         }
         HappenedMatch happenedMatch = (HappenedMatch) o;
-        return id == happenedMatch.id && Objects.equals(player, happenedMatch.player) && Objects.equals(match, happenedMatch.match) && result == happenedMatch.result;
+        return id == happenedMatch.id && Objects.equals(player, happenedMatch.player) && Objects.equals(match, happenedMatch.match) && point == happenedMatch.point && elo == happenedMatch.elo;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, player, match, result);
+        return Objects.hash(id, player, match, point, elo);
     }
 
     @Override
@@ -98,8 +113,10 @@ public class HappenedMatch implements Serializable {
             " id='" + getId() + "'" +
             ", player='" + getPlayer() + "'" +
             ", match='" + getMatch() + "'" +
-            ", result='" + getResult() + "'" +
+            ", point='" + getPoint() + "'" +
+            ", elo='" + getElo() + "'" +
             "}";
     }
 
+    
 }

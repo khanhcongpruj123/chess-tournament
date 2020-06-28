@@ -51,7 +51,7 @@ public class EditPlayerFrm extends JFrame implements ActionListener {
         btnCancel.setBounds(10, 200, 100, 50);
         btnOk.setBounds(120, 200, 100, 50);
         btnOk.addActionListener(this);
-        btnOk.addActionListener(this);
+        btnCancel.addActionListener(this);
 
         this.add(edtName);
         this.add(edtBirthYear);

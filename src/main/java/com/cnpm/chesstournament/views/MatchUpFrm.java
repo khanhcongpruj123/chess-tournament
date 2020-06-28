@@ -11,7 +11,7 @@ public class MatchUpFrm extends JFrame {
 
     private JTable eloTable;
     private DefaultTableModel dataModel;
-    private String[] rankColumns = {"id", "name", "oldElo", "newElo"};
+    private String[] rankColumns = {"Id", "Tên", "Năm sinh", "Quốc tịch"};
 
     public MatchUpFrm() {
         this.setSize(WIDTH, HEIGHT);

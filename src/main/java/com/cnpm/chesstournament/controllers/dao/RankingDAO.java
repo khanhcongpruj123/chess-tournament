@@ -40,13 +40,13 @@ public class RankingDAO extends DAO {
                 @Override
                 public int compare(Ranking o1, Ranking o2) {
                     if (o1.getPoint() > o2.getPoint()) {
-                        return 0;
+                        return -1;
                     } else if (o1.getPoint() < o2.getPoint()) {
-                        return -1;
-                    } else if (o1.getElo() > o2.getElo()) {
                         return 1;
-                    } else if (o1.getElo() < o2.getElo()) {
+                    } else if (o1.getElo() > o2.getElo()) {
                         return -1;
+                    } else if (o1.getElo() < o2.getElo()) {
+                        return 1;
                     }
                     return 0;
                 }
@@ -62,13 +62,16 @@ public class RankingDAO extends DAO {
     }
 
     private long getTotalPointOfCompetior(long id, long roundIndex) {
-        String sql = "SELECT SUM(tbl_HappenedMatch.point) FROM tbl_Player, tbl_HappenedMatch, tbl_Match, tbl_Round WHERE (tbl_Match.player1_id = 1 OR tbl_Match.player2_id = 1) AND tbl_HappenedMatch.match_id = tbl_Match.id AND tbl_HappenedMatch.player_id = tbl_Player.id AND tbl_Round.id <= ? AND NOT tbl_HappenedMatch.player_id = ?";
+        System.out.println("round index: " + roundIndex + "id: " + id);
+        String sql = "SELECT SUM(tbl_HappenedMatch.point) FROM tbl_Player, tbl_HappenedMatch, tbl_Match, tbl_Round WHERE (tbl_Match.player1_id = ? OR tbl_Match.player2_id = ?) AND tbl_HappenedMatch.match_id = tbl_Match.id AND tbl_HappenedMatch.player_id = tbl_Player.id AND tbl_Round.round <= ? AND NOT tbl_HappenedMatch.player_id = ?";
         try {
 
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setLong(1, roundIndex);
+            statement.setLong(1, id);
             statement.setLong(2, id);
-            ResultSet resultSet = statement.executeQuery(sql);
+            statement.setLong(3, roundIndex);
+            statement.setLong(4, id);
+            ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
                 return resultSet.getLong(1);
             }
@@ -103,9 +106,11 @@ public class RankingDAO extends DAO {
             statement.setLong(1, roundIndex);
             statement.setLong(2, id);
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            long point = resultSet.getLong(1);
-            return point;
+            while(resultSet.next()) {
+                long point = resultSet.getLong(1);
+                return point;
+            }
+            return 0;
         } catch(SQLException e) {
             e.printStackTrace();
             return 0;

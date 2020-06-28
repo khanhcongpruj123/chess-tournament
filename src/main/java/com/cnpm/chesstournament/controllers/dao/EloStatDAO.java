@@ -1,6 +1,7 @@
 package com.cnpm.chesstournament.controllers.dao;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.sql.*;
 
@@ -10,7 +11,7 @@ public class EloStatDAO extends DAO {
 
     public List<EloStat> getAllEloStat() {
         List<EloStat> res = new ArrayList<>();
-        String sql = "SELECT tbl_Player.id, name, birth_year, nationality, oldElo, elo FROM tbl_Player INNER JOIN tbl_HappenedMatch ON tbl_Player.id = tbl_HappenedMatch.player_id";
+        String sql = "SELECT id, name, birth_year, nationality, oldElo FROM tbl_Player";
         try {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
@@ -20,7 +21,6 @@ public class EloStatDAO extends DAO {
                 long birthYear = resultSet.getLong(3);
                 String nationality = resultSet.getString(4);
                 long oldElo = resultSet.getLong(5);
-
                 long newElo = getEloPlayerById(id) + oldElo;
                 EloStat eloStat = new EloStat(id, name, birthYear, nationality, oldElo, newElo);
 
@@ -30,6 +30,18 @@ public class EloStatDAO extends DAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        res.sort(new Comparator<EloStat>() {
+
+            @Override
+            public int compare(EloStat o1, EloStat o2) {
+                if (o1.getEloChange() < o2.getEloChange()) return 1;
+                else if (o1.getEloChange() > o2.getEloChange()) return -1;
+                else if (o1.getNewElo() < o2.getNewElo()) return 1;
+                else if (o1.getNewElo() > o2.getNewElo()) return -1;
+                return 0;
+            }
+        });
 
         return res;
     }
