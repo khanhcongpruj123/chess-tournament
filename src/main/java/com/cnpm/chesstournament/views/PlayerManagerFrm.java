@@ -35,7 +35,6 @@ public class PlayerManagerFrm extends JFrame implements ActionListener {
 
     void initWidgets() {
 
-
         btnUpdate = new JButton("Cập nhật");
         btnDelete = new JButton("Xoá");
         btnAdd = new JButton("Thêm");

@@ -62,9 +62,9 @@ public class HomeFrm extends JFrame implements ActionListener {
            } else if (source.equals(btnManagePlayer)) {
                 PlayerManagerFrm playerManagerFrm = new PlayerManagerFrm();
            } else if (source.equals(btnRanking)) {
-
+                RankingFrm ranking = new RankingFrm();
            } else if (source.equals(btnMatchUp)) {
-
+                MatchUpFrm matchUpFrm = new MatchUpFrm();
            } else if (source.equals(btnUpdateMatchResult)) {
 
            }

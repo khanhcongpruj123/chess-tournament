@@ -10,7 +10,6 @@ public class Player {
     private String nationality;
 
 
-
     public Player() {
     }
 

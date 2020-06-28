@@ -8,7 +8,9 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import com.cnpm.chesstournament.controllers.dao.EloStatDAO;
+import com.cnpm.chesstournament.controllers.dao.RankingDAO;
 import com.cnpm.chesstournament.models.EloStat;
+import com.cnpm.chesstournament.models.Ranking;
 
 
 
@@ -19,8 +21,7 @@ public class RankingFrm extends JFrame {
 
     private JTable rankingTable;
     private DefaultTableModel model;
-    private final String[] colums = {"Rank", "PlayerID", "Name", "Elo"};
-
+    private final String[] colums = {"Id", "Tên", "Năm sinh","Quốc tịch", "Tổng điểm", "Tổng điểm đối thủ đã gặp", "Elo"};
     public RankingFrm() {
 
         this.setSize(WIDTH, HEIGHT);
@@ -40,7 +41,7 @@ public class RankingFrm extends JFrame {
         model = new DefaultTableModel();
         rankingTable.setModel(model);
         
-        rankingTable.setBounds((WIDTH - 300) / 2, 10,  300, 300);
+        rankingTable.setBounds((WIDTH - 500) / 2, 10,  500, 500);
         this.add(rankingTable);
     }
 
@@ -49,29 +50,24 @@ public class RankingFrm extends JFrame {
         
             @Override
             public void run() {
-                EloStatDAO eloStatDAO = new EloStatDAO();
-                List<EloStat> list = eloStatDAO.getAllEloStat();
-                list.sort(new Comparator<EloStat>() {
+                RankingDAO rankingDAO = new RankingDAO();
+                List<Ranking> list = rankingDAO.getRankingByRound(1);
+            
 
-                    @Override
-                    public int compare(EloStat o1, EloStat o2) {
-                        if (o1.getNewElo() > o2.getNewElo()) return 1;
-                        else if (o1.getNewElo() < o2.getNewElo()) return -1;
-                        else if (o1.getName().compareTo(o2.getName()) < 0) return 1;
-                        else return -1;
-                    }
-                });
-
-                String[][] data = new String[list.size()][4];
+                String[][] data = new String[list.size()][7];
 
                 for (int i = 0; i < list.size(); i++) {
-                    EloStat player = list.get(i);
-                    data[i][0] = "" + (i + 1);
-                    data[i][1] = "" + player.getId();
-                    data[i][2] = "" + player.getName();
+                    Ranking player = list.get(i);
+                    data[i][0] = "" + player.getId();
+                    data[i][1] = "" + player.getName();
+                    data[i][2] = "" + player.getBirthYear();
+                    data[i][3] = "" + player.getNationality();
+                    data[i][4] = "" + player.getPoint();
+                    data[i][5] = "" + player.getTotalPointOfCompetitor();
+                    data[i][5] = "" + player.getElo();
                 }
 
-            model.setDataVector(data, colums);
+                model.setDataVector(data, colums);
             }
         }).start();;
     }

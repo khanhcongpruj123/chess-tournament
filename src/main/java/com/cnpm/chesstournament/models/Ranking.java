@@ -1,71 +1,91 @@
 package com.cnpm.chesstournament.models;
 
-import java.io.Serializable;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Objects;
 
-public class Ranking implements Serializable {
+public class Ranking extends Player{
     
-    private List<EloStat> eloStats;
-    private Comparator eloComparator = new Comparator<EloStat>() {
-
-        @Override
-        public int compare(EloStat o1, EloStat o2) {
-            if (o1.getNewElo() > o2.getNewElo()) return 1;
-            if (o1.getNewElo() < o2.getNewElo()) return -1;
-            return 0;
-        }
-
-    };
+   private long point;
+   private long totalPointOfCompetitor;
+   private long elo;
 
 
     public Ranking() {
     }
 
-    public Ranking(final List<EloStat> eloStats) {
-        this.eloStats = eloStats;
+    public Ranking(long id, String name, long birthYear, String nationality, long point, long totalPointOfCompetitor, long elo) {
+        super(id, name, birthYear, nationality);
+        this.point = point;
+        this.totalPointOfCompetitor = totalPointOfCompetitor;
+        this.elo = elo;
     }
 
-    public List<EloStat> getEloStats() {
-        return this.eloStats;
+    public Ranking(long point, long totalPointOfCompetitor, long elo) {
+        this.point = point;
+        this.totalPointOfCompetitor = totalPointOfCompetitor;
+        this.elo = elo;
     }
 
-    public void setEloStats(final List<EloStat> eloStats) {
-        this.eloStats = eloStats;
-        sortElo();
+    public long getPoint() {
+        return this.point;
     }
 
-    public Ranking eloStats(final List<EloStat> eloStats) {
-        this.eloStats = eloStats;
+    public void setPoint(long point) {
+        this.point = point;
+    }
+
+    public long getTotalPointOfCompetitor() {
+        return this.totalPointOfCompetitor;
+    }
+
+    public void setTotalPointOfCompetitor(long totalPointOfCompetitor) {
+        this.totalPointOfCompetitor = totalPointOfCompetitor;
+    }
+
+    public long getElo() {
+        return this.elo;
+    }
+
+    public void setElo(long elo) {
+        this.elo = elo;
+    }
+
+    public Ranking point(long point) {
+        this.point = point;
         return this;
     }
 
-    public void sortElo() {
-        if (eloStats == null) return;
-        eloStats.sort(eloComparator);
+    public Ranking totalPointOfCompetitor(long totalPointOfCompetitor) {
+        this.totalPointOfCompetitor = totalPointOfCompetitor;
+        return this;
+    }
+
+    public Ranking elo(long elo) {
+        this.elo = elo;
+        return this;
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (o == this)
             return true;
         if (!(o instanceof Ranking)) {
             return false;
         }
-        final Ranking ranking = (Ranking) o;
-        return Objects.equals(eloStats, ranking.eloStats);
+        Ranking ranking = (Ranking) o;
+        return point == ranking.point && totalPointOfCompetitor == ranking.totalPointOfCompetitor && elo == ranking.elo;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(eloStats);
+        return Objects.hash(point, totalPointOfCompetitor, elo);
     }
 
     @Override
     public String toString() {
         return "{" +
-            " eloStats='" + getEloStats() + "'" +
+            " point='" + getPoint() + "'" +
+            ", totalPointOfCompetitor='" + getTotalPointOfCompetitor() + "'" +
+            ", elo='" + getElo() + "'" +
             "}";
     }
 
