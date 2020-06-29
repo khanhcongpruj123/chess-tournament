@@ -9,6 +9,7 @@ import javax.swing.table.TableModel;
 import com.cnpm.chesstournament.controllers.dao.EloStatDAO;
 import com.cnpm.chesstournament.models.EloStat;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -24,6 +25,7 @@ public class EloStatFrm extends JFrame implements ActionListener {
     private DefaultTableModel dataModel;
     private final String[] colums = { "ID", "Tên", "Elo cũ", "Elo mới", "Elo tăng giảm" };
     private List<EloStat> list;
+    private JScrollPane pane;
 
     public EloStatFrm() {
 
@@ -46,6 +48,12 @@ public class EloStatFrm extends JFrame implements ActionListener {
         eloTable.setModel(dataModel);
         eloTable.setBounds((WIDTH - 500) / 2, 10, 500, 500);
 
+        pane = new JScrollPane();
+        pane.setBounds((WIDTH - 500) / 2, 70, 500, 500);
+        pane.setViewportView(eloTable);
+        eloTable.getTableHeader().setBackground(Color.WHITE);
+
+
         eloTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int column = eloTable.getColumnModel().getColumnIndexAtX(e.getX());
@@ -56,7 +64,7 @@ public class EloStatFrm extends JFrame implements ActionListener {
 			}
 		});
 
-        this.add(eloTable);
+        this.add(pane);
     }
 
     void loadData() {

@@ -12,6 +12,8 @@ import com.cnpm.chesstournament.controllers.dao.EloStatDAO;
 import com.cnpm.chesstournament.controllers.dao.RankingDAO;
 import com.cnpm.chesstournament.models.EloStat;
 import com.cnpm.chesstournament.models.Ranking;
+
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -46,6 +48,7 @@ public class RankingFrm extends JFrame {
         rankingTable.setModel(model);
         
         rankingTable.setBounds((WIDTH - 500) / 2, 10,  500, 500);
+        rankingTable.getTableHeader().setBackground(Color.WHITE);
 
         rankingTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {

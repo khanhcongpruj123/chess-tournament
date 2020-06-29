@@ -8,6 +8,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,6 +19,7 @@ import com.cnpm.chesstournament.models.Player;
 import com.cnpm.chesstournament.models.Ranking;
 import com.cnpm.chesstournament.models.Round;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -37,6 +39,7 @@ public class MatchUpFrm extends JFrame implements ActionListener {
     private List<Round> listRound;
     private List<Ranking> list;
     private JButton btnMatchUp;
+    private JScrollPane pane;
 
     public MatchUpFrm() {
         this.setSize(WIDTH, HEIGHT);
@@ -55,10 +58,13 @@ public class MatchUpFrm extends JFrame implements ActionListener {
     void initWidgets() {
 
         dataModel = new DefaultTableModel(null, columns);
-
+        pane = new JScrollPane();
         rankingTable = new JTable();
         rankingTable.setModel(dataModel);
         rankingTable.setBounds((WIDTH - 500) / 2, 70, 500, 500);
+        pane.setViewportView(rankingTable);
+        pane.setBounds((WIDTH - 500) / 2, 70, 500, 500);
+        rankingTable.getTableHeader().setBackground(Color.WHITE);
 
         btnMatchUp = new JButton("Xếp lịch");
         btnMatchUp.setBounds(120, 10, 100, 50);
@@ -70,7 +76,7 @@ public class MatchUpFrm extends JFrame implements ActionListener {
         roundBox.addActionListener(this);
         roundBox.setBounds(10, 10, 100, 50);
 
-        this.add(rankingTable);
+        this.add(pane);
         this.add(roundBox);
         this.add(btnMatchUp);
     }

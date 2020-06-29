@@ -3,6 +3,7 @@ package com.cnpm.chesstournament.views;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -11,6 +12,7 @@ import com.cnpm.chesstournament.controllers.dao.RoundDAO;
 import com.cnpm.chesstournament.models.Match;
 import com.cnpm.chesstournament.models.Round;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -29,6 +31,7 @@ public class MatchFrm extends JFrame implements ActionListener{
     private String[] columns = {"ID", "Ten nguoi choi 1", "Ten nguoi choi 2"};
     private List<Round> listRound;
     private List<Match> list;
+    private JScrollPane pane;
 
     public MatchFrm() {
 
@@ -64,11 +67,13 @@ public class MatchFrm extends JFrame implements ActionListener{
     void initWidgets() {
 
         dataModel = new DefaultTableModel(null, columns);
-
         matchTable = new JTable();
         matchTable.setModel(dataModel);
         matchTable.setBounds((WIDTH - 500) / 2, 70, 500, 500);
-
+        pane = new JScrollPane();
+        pane.setViewportView(matchTable);
+        pane.setBounds((WIDTH - 500) / 2, 70, 500, 500);
+        matchTable.getTableHeader().setBackground(Color.WHITE);
 
         roundModel = new DefaultComboBoxModel<String>();
         roundBox = new JComboBox<>();
@@ -86,7 +91,7 @@ public class MatchFrm extends JFrame implements ActionListener{
 			}
 		});
 
-        this.add(matchTable);
+        this.add(pane);
         this.add(roundBox);
     }
 

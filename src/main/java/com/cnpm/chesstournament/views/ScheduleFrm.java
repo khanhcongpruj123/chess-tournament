@@ -1,5 +1,6 @@
 package com.cnpm.chesstournament.views;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -8,6 +9,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,6 +30,7 @@ public class ScheduleFrm extends JFrame implements ActionListener {
     private List<Match> schedule;
     private JButton btnSave;
     private JButton btnCancel;
+    private JScrollPane pane;
 
     public ScheduleFrm(List<Match> schedule) {
 
@@ -60,12 +64,16 @@ public class ScheduleFrm extends JFrame implements ActionListener {
         btnSave.setBounds(120, 10, 100, 50);
         btnCancel.addActionListener(this);
         btnSave.addActionListener(this);
+        pane = new JScrollPane();
+        pane.setBounds((WIDTH - 500) / 2, 70, 500, 500);
 
         matchTable = new JTable();
+        matchTable.getTableHeader().setBackground(Color.WHITE);
         matchTable.setModel(dataModel);
         matchTable.setBounds((WIDTH - 500) / 2, 70, 500, 500);
+        pane.setViewportView(matchTable);
 
-        this.add(matchTable);
+        this.add(pane);
         this.add(btnSave);
         this.add(btnCancel);
     }
@@ -78,6 +86,7 @@ public class ScheduleFrm extends JFrame implements ActionListener {
             MatchDAO matchDAO = new MatchDAO();
             boolean res = matchDAO.saveSchedule(schedule);
             if (res) {
+                JOptionPane.showMessageDialog(this, "Đã lưu", "Thông báo", JOptionPane.PLAIN_MESSAGE);
                 dispose();
             }
         }
