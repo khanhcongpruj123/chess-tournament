@@ -12,7 +12,8 @@ public class DAO {
         if (conn == null) {
             System.out.println("Creating connection...");
             String dbUrl = "jdbc:mysql://localhost:3306/chesstournament?autoReconnect=true&useSSL=false";
-            try {
+
+			try {
                 conn = DriverManager.getConnection(dbUrl, "root", "");
                 System.out.println("Creating connection success!");
             } catch (SQLException e) {

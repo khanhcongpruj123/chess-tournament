@@ -9,6 +9,10 @@ import com.cnpm.chesstournament.models.EloStat;
 
 public class EloStatDAO extends DAO {
 
+    public EloStatDAO() {
+        super();
+    }
+
     public List<EloStat> getAllEloStat() {
         List<EloStat> res = new ArrayList<>();
         String sql = "SELECT id, name, birth_year, nationality, oldElo FROM tbl_Player";
@@ -46,7 +50,7 @@ public class EloStatDAO extends DAO {
         return res;
     }
 
-    private long getEloPlayerById(long id) {
+    public long getEloPlayerById(long id) {
         String sql = "SELECT SUM(tbl_HappenedMatch.elo) FROM tbl_HappenedMatch JOIN tbl_Player ON tbl_HappenedMatch.player_id = tbl_Player.id WHERE tbl_Player.id = ?";
         try {
             PreparedStatement statement = conn.prepareStatement(sql);
